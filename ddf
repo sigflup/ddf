@@ -1,0 +1,20 @@
+#!/bin/sh
+
+dd $@ &
+
+PID=$!
+
+while :; do 
+ if ps -p $PID >/dev/null; then
+  kill -s INFO $PID
+ else
+  exit
+ fi
+ sleep 1
+ if ps -p $PID >/dev/null; then
+  printf "\33[A\33[K"
+  printf "\33[A\33[K"
+  printf "\33[A\33[K"
+ fi
+
+done
